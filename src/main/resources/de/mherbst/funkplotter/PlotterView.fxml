@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.canvas.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane fx:id="rootPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.14-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.mherbst.funkplotter.PlotterController">
+   <top>
+      <MenuBar BorderPane.alignment="TOP_LEFT">
+        <menus>
+
+          <Menu mnemonicParsing="false" text="File">
+            <items>
+              <MenuItem mnemonicParsing="false" onAction="#menuItemExitOnAction" text="Exit" />
+            </items>
+          </Menu>
+
+          <Menu mnemonicParsing="false" text="Edit">
+            <items>
+              <MenuItem mnemonicParsing="false" text="Delete" />
+            </items>
+          </Menu>
+
+          <Menu mnemonicParsing="false" text="Help">
+            <items>
+              <MenuItem mnemonicParsing="false" text="About" />
+            </items>
+          </Menu>
+
+        </menus>
+      </MenuBar>
+   </top>
+
+   <center>
+      <SplitPane dividerPositions="0.3" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+        <items>
+          <AnchorPane fx:id="anchorPaneLeft" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <VBox layoutX="7.0" prefHeight="334.0" prefWidth="133.0">
+                     <children>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <Label text="Label" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+          <AnchorPane fx:id="anchorPaneRight" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
+               <children>
+                  <ScrollPane fx:id="scrollPane" prefHeight="356.0" prefWidth="416.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <content>
+                        <Canvas fx:id="canvas" height="2000.0" onMouseClicked="#canvasOnMouseClicked" onMouseDragged="#canvasOnMouseDragged" onMouseMoved="#canvasOnMouseMoved" onMousePressed="#canvasOnMousePressed" onMouseReleased="#canvasOnMouseReleased" width="2000.0" />
+                     </content>
+                  </ScrollPane>
+               </children>
+          </AnchorPane>
+        </items>
+      </SplitPane>
+   </center>
+
+   <bottom>
+      <Label fx:id="statusBar" prefHeight="17.0" prefWidth="619.0" text="StatusBar" BorderPane.alignment="TOP_LEFT" />
+   </bottom>
+
+</BorderPane>

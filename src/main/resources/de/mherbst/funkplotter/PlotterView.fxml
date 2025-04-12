@@ -32,7 +32,7 @@
    </top>
 
    <center>
-      <SplitPane dividerPositions="0.3" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <SplitPane fx:id="splitPane" dividerPositions="0.3" prefHeight="160.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <items>
           <AnchorPane fx:id="anchorPaneLeft" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
@@ -49,11 +49,7 @@
             </AnchorPane>
           <AnchorPane fx:id="anchorPaneRight" minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
                <children>
-                  <ScrollPane fx:id="scrollPane" prefHeight="356.0" prefWidth="416.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                     <content>
-                        <Canvas fx:id="canvas" height="2000.0" onMouseClicked="#canvasOnMouseClicked" onMouseDragged="#canvasOnMouseDragged" onMouseMoved="#canvasOnMouseMoved" onMousePressed="#canvasOnMousePressed" onMouseReleased="#canvasOnMouseReleased" width="2000.0" />
-                     </content>
-                  </ScrollPane>
+                  <Canvas fx:id="canvas" height="400.0" width="400.0" onMouseClicked="#mouseOnCanvasClicked" onMouseDragged="#mouseOnCanvasDragged" onMouseMoved="#mouseOnCanvasMoved" onMousePressed="#mouseOnCanvasPressed" onMouseReleased="#mouseOnCanvasReleased" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                </children>
           </AnchorPane>
         </items>

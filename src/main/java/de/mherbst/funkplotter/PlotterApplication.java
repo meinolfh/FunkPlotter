@@ -17,8 +17,6 @@ import java.util.Objects;
  */
 public class PlotterApplication extends Application {
 
-    public static final PlotterApplication getInstance = new PlotterApplication ( );
-
     public static Stage primaryStage;
 
     /**
@@ -33,15 +31,21 @@ public class PlotterApplication extends Application {
 
         final URL fxmlRes = this.getClass ( ).getResource ( "PlotterView.fxml" );
         final URL cssRes = this.getClass ( ).getResource ( "PlotterView.css" );
-        primaryStage = stage;
+
+        if ( fxmlRes == null ) {
+            System.err.println ( "Cannot find FXML file!" );
+            return;
+        }
+
         final FXMLLoader fxmlLoader = new FXMLLoader ( fxmlRes );
         final Parent root = fxmlLoader.load ( );
-        //final PlotterController controller = fxmlLoader.getController ( );
+        final PlotterController controller = fxmlLoader.getController ( );
         final Scene scene = new Scene ( root, PlotterConstants.APPL_WIDTH, PlotterConstants.APPL_HEIGHT );
 
         if ( cssRes != null ) {
-
-            root.getScene ( ).getStylesheets ( ).add ( Objects.requireNonNull ( cssRes ).toExternalForm ( ) );
+            scene.getStylesheets ( ).add ( Objects.requireNonNull ( cssRes ).toExternalForm ( ) );
+        } else {
+            System.err.println ( "Cannot find CSS file!" );
         }
 
         /*
@@ -58,23 +62,30 @@ public class PlotterApplication extends Application {
             event.consume ( );
             logout ( stage );
         } );
+
     }
 
     /**
-     * logout from application
+     * Handles application exit confirmation.
+     * Consider moving confirmation logic into the controller if it's triggered
+     * from a menu there.
      *
-     * @param stage as Stage
+     * @param stage      The primary stage
      */
     public void logout ( Stage stage ) {
         Alert alert = new Alert ( Alert.AlertType.CONFIRMATION );
         alert.setTitle ( "Logout" );
         alert.setHeaderText ( "You are about to logout!" );
-        alert.setContentText ( "Do you want to save before exiting?" );
+        alert.setContentText ( "Do you want to save before exiting?" ); // Add save logic if needed
 
-        if ( alert.showAndWait ( ).get ( ) == ButtonType.OK ) {
+        if ( alert.showAndWait ( ).orElse ( ButtonType.CANCEL ) == ButtonType.OK ) {
+            System.out.println ( "Exiting..." ); // Add cleanup if needed
             stage.close ( );
+        } else {
+            System.out.println ( "Exit cancelled." );
         }
     }
+
 
     /**
      * @param args the command line arguments

@@ -17,7 +17,7 @@ import java.util.Objects;
  */
 public class PlotterApplication extends Application {
 
-    public static Stage primaryStage;
+    //public static Stage primaryStage;
 
     /**
      * @param stage the primary stage for this application, onto which
@@ -27,7 +27,7 @@ public class PlotterApplication extends Application {
      */
     @Override
     public void start ( Stage stage ) throws IOException {
-        primaryStage = stage;
+        //primaryStage = stage;
 
         final URL fxmlRes = this.getClass ( ).getResource ( "PlotterView.fxml" );
         final URL cssRes = this.getClass ( ).getResource ( "PlotterView.css" );
@@ -46,6 +46,7 @@ public class PlotterApplication extends Application {
             scene.getStylesheets ( ).add ( Objects.requireNonNull ( cssRes ).toExternalForm ( ) );
         } else {
             System.err.println ( "Cannot find CSS file!" );
+            return;
         }
 
         /*
@@ -72,20 +73,27 @@ public class PlotterApplication extends Application {
      *
      * @param stage      The primary stage
      */
-    public void logout ( Stage stage ) {
-        Alert alert = new Alert ( Alert.AlertType.CONFIRMATION );
-        alert.setTitle ( "Logout" );
-        alert.setHeaderText ( "You are about to logout!" );
-        alert.setContentText ( "Do you want to save before exiting?" ); // Add save logic if needed
+    public static void logout ( Stage stage ) {
+        if (stage != null) {
+            Alert alert = new Alert ( Alert.AlertType.CONFIRMATION );
+            alert.initOwner ( stage );
+            alert.setTitle ( "Logout" );
+            alert.setHeaderText ( "You are about to logout!" );
+            alert.setContentText ( "Do you want to save before exiting?" );
 
-        if ( alert.showAndWait ( ).orElse ( ButtonType.CANCEL ) == ButtonType.OK ) {
-            System.out.println ( "Exiting..." ); // Add cleanup if needed
-            stage.close ( );
+            // Add save logic if needed
+
+            if ( alert.showAndWait ( ).orElse ( ButtonType.CANCEL ) == ButtonType.OK ) {
+                // System.out.println ( "Exiting..." );
+                // Perform any controller-specific cleanup if needed
+                stage.close ( );
+            } else {
+                System.out.println ( "Exit cancelled." );
+            }
         } else {
-            System.out.println ( "Exit cancelled." );
+            System.err.println ( "Could not get Stage to exit." );
         }
     }
-
 
     /**
      * @param args the command line arguments

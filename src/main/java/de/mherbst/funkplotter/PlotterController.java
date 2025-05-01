@@ -15,13 +15,12 @@ import javafx.stage.Stage;
 
 import java.net.*;
 import java.util.*;
+import java.util.function.DoubleUnaryOperator;
 
 public class PlotterController implements Initializable {
 
     @FXML
     public BorderPane rootPane;
-    //    @FXML
-//    public SplitPane splitPane;
     @FXML
     public AnchorPane anchorPaneLeft;
     @FXML
@@ -30,6 +29,10 @@ public class PlotterController implements Initializable {
     public Canvas canvas;
     @FXML
     public Label statusBar;
+
+    private CheckMenuItem drawGridItem = null;
+    private CheckMenuItem drawAxisItem = null;
+    private CheckMenuItem drawAxisMarker = null;
 
     // --- Zoom and Pan State ---
     private double scale = 50.0; // Pixels per mathematical unit (initial zoom)
@@ -192,7 +195,7 @@ public class PlotterController implements Initializable {
 
         // Draw components
         drawAxes ( gc, width, height );
-        drawFunction ( gc, width, height );
+        drawAllFunctions ( gc, width, height );
     }
 
     public void drawAxes ( GraphicsContext gc, double canvasWidth, double canvasHeight ) {
@@ -226,17 +229,21 @@ public class PlotterController implements Initializable {
         if ( scale > 200 ) gridStep = 0.25;
         // Add more steps as needed
 
+
         // Vertical grid lines
         double startX = Math.ceil ( minMathX / gridStep ) * gridStep;
         for (double mathX = startX; mathX <= maxMathX; mathX += gridStep) {
             if ( Math.abs ( mathX ) < 1e-9 ) continue; // Skip axis line if origin is visible
             Point2D canvasP = mathToCanvas ( mathX, 0 ); // Get canvas X for this math X
-            gc.strokeLine ( canvasP.getX ( ), 0, canvasP.getX ( ), canvasHeight );
-            // Draw label (only if reasonably spaced and axis is visible)
-            if ( scale * gridStep > 25 ) {
-                gc.setFill ( Color.DARKGRAY );
-                // Position label relative to the VISIBLE Y-axis position, clamped slightly from top edge
-                gc.fillText ( String.format ( "%.2g", mathX ), canvasP.getX ( ) + 3, Math.max ( 15, visibleAxisY - 5 ) );
+            if ( drawGridItem.isSelected ( ) ) {
+                gc.strokeLine ( canvasP.getX ( ), 0, canvasP.getX ( ), canvasHeight );
+            }
+            if ( drawAxisMarker.isSelected ( ) ) {
+                if ( scale * gridStep > 25 ) {
+                    gc.setFill ( Color.DARKGRAY );
+                    // Position label relative to the VISIBLE Y-axis position, clamped slightly from top edge
+                    gc.fillText ( String.format ( "%.2g", mathX ), canvasP.getX ( ) + 3, Math.max ( 15, visibleAxisY - 5 ) );
+                }
             }
         }
 
@@ -245,12 +252,16 @@ public class PlotterController implements Initializable {
         for (double mathY = startY; mathY <= maxMathY; mathY += gridStep) {
             if ( Math.abs ( mathY ) < 1e-9 ) continue; // Skip axis line if origin is visible
             Point2D canvasP = mathToCanvas ( 0, mathY ); // Get canvas Y for this math Y
-            gc.strokeLine ( 0, canvasP.getY ( ), canvasWidth, canvasP.getY ( ) );
+            if ( drawGridItem.isSelected ( ) ) {
+                gc.strokeLine ( 0, canvasP.getY ( ), canvasWidth, canvasP.getY ( ) );
+            }
             // Draw label (only if reasonably spaced and axis is visible)
-            if ( scale * gridStep > 20 ) {
-                gc.setFill ( Color.DARKGRAY );
-                // Position label relative to the VISIBLE X-axis position, clamped slightly from right edge
-                gc.fillText ( String.format ( "%.2g", mathY ), Math.min ( canvasWidth - 30, visibleAxisX + 5 ), canvasP.getY ( ) - 3 );
+            if ( drawAxisMarker.isSelected ( ) ) {
+                if ( scale * gridStep > 20 ) {
+                    gc.setFill ( Color.DARKGRAY );
+                    // Position label relative to the VISIBLE X-axis position, clamped slightly from right edge
+                    gc.fillText ( String.format ( "%.2g", mathY ), Math.min ( canvasWidth - 30, visibleAxisX + 5 ), canvasP.getY ( ) - 3 );
+                }
             }
         }
 
@@ -259,35 +270,29 @@ public class PlotterController implements Initializable {
         gc.setLineWidth ( 2.0 );
         gc.setFill ( Color.BLACK ); // For labels and arrows
 
-        // X-Axis (Draw at visibleAxisY)
-        gc.strokeLine ( 0, visibleAxisY, canvasWidth, visibleAxisY );
-        // Draw arrow near the right edge, positioned vertically by visibleAxisY
-        drawArrow ( gc, canvasWidth, visibleAxisY, canvasWidth, visibleAxisY );
-        // Draw 'X' label near the arrow, clamped slightly from top edge
-        gc.fillText ( "X", canvasWidth - 25, Math.max ( 15, visibleAxisY - 5 ) );
+        if ( drawAxisItem.isSelected ( ) ) {
+            // X-Axis (Draw at visibleAxisY)
+            gc.strokeLine ( 0, visibleAxisY, canvasWidth, visibleAxisY );
+            // Draw arrow near the right edge, positioned vertically by visibleAxisY
+            drawArrow ( gc, canvasWidth, visibleAxisY, canvasWidth, visibleAxisY );
+            // Draw 'X' label near the arrow, clamped slightly from top edge
+            gc.fillText ( "X", canvasWidth - 25, Math.max ( 15, visibleAxisY - 5 ) );
 
 
-        // Y-Axis (Draw at visibleAxisX)
-        gc.strokeLine ( visibleAxisX, 0, visibleAxisX, canvasHeight );
-        // Draw arrow near the top edge, positioned horizontally by visibleAxisX
-        drawArrow ( gc, visibleAxisX, 10, visibleAxisX, 0 );
-        // Draw 'Y' label near the arrow, clamped slightly from right edge
-        gc.fillText ( "Y", Math.min ( canvasWidth - 15, visibleAxisX + 5 ), 20 );
+            // Y-Axis (Draw at visibleAxisX)
+            gc.strokeLine ( visibleAxisX, 0, visibleAxisX, canvasHeight );
+            // Draw arrow near the top edge, positioned horizontally by visibleAxisX
+            drawArrow ( gc, visibleAxisX, 10, visibleAxisX, 0 );
+            // Draw 'Y' label near the arrow, clamped slightly from right edge
+            gc.fillText ( "Y", Math.min ( canvasWidth - 15, visibleAxisX + 5 ), 20 );
+        }
 
         gc.restore ( ); // Restore original state
     }
 
-    public void drawFunction ( GraphicsContext gc, double canvasWidth, double canvasHeight ) {
-        gc.save ( );
-        //gc.setStroke ( Color.RED );
-        gc.setLineWidth ( 1.5 ); // Slightly thicker line
-
-        // Calculate mathematical range to plot based on canvas width
-        Point2D startMath = canvasToMath ( 0, 0 );
-        Point2D endMath = canvasToMath ( canvasWidth, 0 ); // Only need X range
-
-        double minMathX = startMath.getX ( );
-        double maxMathX = endMath.getX ( );
+    public void drawFunction ( GraphicsContext gc, double canvasWidth, double canvasHeight, double lineWidth, Color color, DoubleUnaryOperator functionLogic ) {
+        gc.setStroke ( color );
+        gc.setLineWidth ( lineWidth );
 
         boolean firstPoint = true;
         double lastCanvasX = 0, lastCanvasY = 0, lastCanvasY2 = 0;
@@ -298,40 +303,50 @@ public class PlotterController implements Initializable {
             Point2D currentMath = canvasToMath ( canvasX, 0 ); // Y doesn't matter here
             double mathX = currentMath.getX ( );
 
-            // Calculate mathematical Y using the function
-            DualNumber dn = new DualNumber ( mathX, 1.0 );
-            double mathY = Math.sin ( mathX ); // Your function here!
-            double mathY2 = dn.sin ( ).getDual ( );
+            double mathY;
+            try {
+                mathY = functionLogic.applyAsDouble ( mathX );
+            } catch (Exception e) {
+                mathY = Double.NaN;
+            }
 
-            // Convert mathematical Y back to canvas pixel Y
             Point2D currentCanvas = mathToCanvas ( mathX, mathY );
-            Point2D currentCanvas2 = mathToCanvas ( mathX, mathY2 );
             double canvasY = currentCanvas.getY ( );
-            double canvasY2 = currentCanvas2.getY ( );
 
             // Draw line segment
             if ( firstPoint ) {
                 firstPoint = false;
             } else {
-                // Basic clipping: Only draw if both points are roughly within bounds
-                // More robust clipping might be needed for extreme zooms/pans
-                if ( !Double.isNaN ( lastCanvasY ) && !Double.isNaN ( canvasY ) &&
-                        lastCanvasY > -canvasHeight * 2 && lastCanvasY < canvasHeight * 2 && // Generous bounds
-                        canvasY > -canvasHeight * 2 && canvasY < canvasHeight * 2 ) {
-                    gc.setStroke ( Color.RED );
-                    gc.strokeLine ( lastCanvasX, lastCanvasY, canvasX, canvasY );
-                    gc.setStroke ( Color.BLUE );
-                    gc.strokeLine ( lastCanvasX, lastCanvasY2, canvasX, canvasY2 );
+                if ( !Double.isNaN ( lastCanvasY ) && !Double.isNaN ( canvasY ) ) {
+                    // Clipping
+                    if ( lastCanvasY > -canvasHeight * 2 && lastCanvasY < canvasHeight * 2 &&
+                            canvasY > -canvasHeight * 2 && canvasY < canvasHeight * 2 ) {
+                        gc.strokeLine ( lastCanvasX, lastCanvasY, canvasX, canvasY );
+                    }
+                } else {
+                    firstPoint = true;
                 }
             }
             lastCanvasX = canvasX;
             lastCanvasY = canvasY;
-            lastCanvasY2 = canvasY2;
         }
+    }
+
+
+    public void drawAllFunctions ( GraphicsContext gc, double canvasWidth, double canvasHeight ) {
+        gc.save ( );
+
+        drawFunction ( gc, canvasWidth, canvasHeight, 1.5, Color.RED, Math::sin );
+        drawFunction ( gc, canvasWidth, canvasHeight, 1.5, Color.BLUE, x -> new DualNumber ( x, 1.0 ).sin ( ).getDual ( ) );
+        drawFunction ( gc, canvasWidth, canvasHeight, 1.5, Color.GREEN, x -> Math.pow ( x, 2 ) );
+        drawFunction ( gc, canvasWidth, canvasHeight, 1.5, Color.ORANGE, Math::tan );
+        drawFunction ( gc, canvasWidth, canvasHeight, 1.5, Color.PURPLE, x -> new DualNumber ( x, 1.0 ).pow ( 2 ).getDual ( ) );
+        drawFunction ( gc, canvasWidth, canvasHeight, 1.5, Color.BLACK, x -> new DualNumber ( x, 1.0 ).pow ( 2 ).getReal ( ) );
+
         gc.restore ( );
     }
 
-    // --- Helper Methods ---
+// --- Helper Methods ---
 
     private void drawArrow ( GraphicsContext gc, double x1, double y1, double x2, double y2 ) {
         // Keep this method as it is, it works on canvas coordinates
@@ -350,14 +365,22 @@ public class PlotterController implements Initializable {
     }
 
     public void initializeContextMenu () {
-        // Keep this method as is
-        canvasContextMenu = new ContextMenu ( );
-        MenuItem clearItem = new MenuItem ( "Grafik" ); // Rename? Maybe "Reset View"?
-        CheckMenuItem drawGridItem = new CheckMenuItem ( "Koordinatengitter" );
-        drawGridItem.setSelected ( true ); // Default to grid on
-        MenuItem infoItem = new MenuItem ( "Info" );
 
-        clearItem.setOnAction ( event -> {
+        canvasContextMenu = new ContextMenu ( );
+        MenuItem resetItem = new MenuItem ( "Grafik zurücksetzen" );
+
+        drawGridItem = new CheckMenuItem ( "Koordinatengitter" );
+        drawGridItem.setSelected ( true ); // Default to grid on
+
+        drawAxisItem = new CheckMenuItem ( "Koordinatenachsen" );
+        drawAxisItem.setSelected ( true ); // Default to axes on
+
+        drawAxisMarker = new CheckMenuItem ( "Achsenbeschriftungen" );
+        drawAxisMarker.setSelected ( true ); // Default to axis markers on
+
+        //MenuItem infoItem = new MenuItem ( "Info" );
+
+        resetItem.setOnAction ( event -> {
             // Reset zoom and pan
             originX = canvas.getWidth ( ) / 2;
             originY = canvas.getHeight ( ) / 2;
@@ -368,37 +391,18 @@ public class PlotterController implements Initializable {
 
         // Add listener to redraw when grid visibility changes
         drawGridItem.selectedProperty ( ).addListener ( ( obs, oldVal, newVal ) -> updateVisibleArea ( ) );
+        drawAxisItem.selectedProperty ( ).addListener ( ( obs, oldVal, newVal ) -> updateVisibleArea ( ) );
+        drawAxisMarker.selectedProperty ( ).addListener ( ( obs, oldVal, newVal ) -> updateVisibleArea ( ) );
 
-        infoItem.setOnAction ( event -> System.out.println ( "Info action triggered" ) );
-        canvasContextMenu.getItems ( ).addAll ( clearItem, drawGridItem, infoItem );
-
-        // Modify drawAxes to check drawGridItem.isSelected() if you want to toggle grid
-        // (Currently, grid is always drawn)
+        //infoItem.setOnAction ( event -> System.out.println ( "Info action triggered" ) );
+        canvasContextMenu.getItems ( ).addAll ( drawGridItem, drawAxisItem, drawAxisMarker, resetItem );
     }
 
     @FXML
     public void menuItemExitOnAction () {
         // Get the stage from any node within the scene controlled by this controller
         Stage stage = ( Stage ) rootPane.getScene ( ).getWindow ( ); // rootPane is your BorderPane @FXML
-
-        if ( stage != null ) {
-            // Option 2 (Better): Handle the confirmation directly here
-            Alert alert = new Alert ( Alert.AlertType.CONFIRMATION );
-            alert.initOwner ( stage ); // Associate alert with the main window
-            alert.setTitle ( "Exit Confirmation" );
-            alert.setHeaderText ( "Exit Funktionsplotter?" );
-            alert.setContentText ( "Do you want to save before exiting?" ); // Add save logic if needed
-
-            if ( alert.showAndWait ( ).orElse ( ButtonType.CANCEL ) == ButtonType.OK ) {
-                System.out.println ( "Exiting via Controller..." );
-                // Perform any controller-specific cleanup if needed
-                stage.close ( ); // Directly close the stage
-            } else {
-                System.out.println ( "Exit cancelled via Controller." );
-            }
-        } else {
-            System.err.println ( "Could not get Stage to exit." );
-        }
+        PlotterApplication.logout ( stage );
     }
 
     // --- Initialization ---

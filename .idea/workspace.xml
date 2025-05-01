@@ -9,6 +9,7 @@
       <change afterPath="$PROJECT_DIR$/src/test/java/de/mherbst/funkplotter/math/DualNumberTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/de/mherbst/funkplotter/PlotterApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/mherbst/funkplotter/PlotterApplication.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/de/mherbst/funkplotter/PlotterConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/mherbst/funkplotter/PlotterConstants.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/de/mherbst/funkplotter/PlotterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/mherbst/funkplotter/PlotterController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
@@ -48,32 +49,35 @@
     <option name="showLibraryContents" value="true" />
     <option name="showMembers" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;Application.Main.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.DualNumberTest.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.DualNumberTest.testAdd.executor&quot;: &quot;Coverage&quot;,
-    &quot;JUnit.DualNumberTest.testConstructor.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.DualNumberTest.testExp_1_over_x.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.DualNumberTest.testMultiply.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.DualNumberTest.testReciprocalZero.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.DualNumberTest.testSin.executor&quot;: &quot;Run&quot;,
-    &quot;JUnit.DualNumberTest.testexp_1_over_x.executor&quot;: &quot;Run&quot;,
-    &quot;Maven.FunkPlotter [clean].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.FunkPlotter [compile].executor&quot;: &quot;Run&quot;,
-    &quot;Maven.FunkPlotter [validate].executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
-    &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;G:/Meinolf/Github/FunkPlotter&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Project&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.0&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.0&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;com.android.studio.ml.bot.mainConfigurable&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.Main.executor": "Run",
+    "JUnit.DualNumberTest.executor": "Run",
+    "JUnit.DualNumberTest.testAdd.executor": "Coverage",
+    "JUnit.DualNumberTest.testConstructor.executor": "Run",
+    "JUnit.DualNumberTest.testExp_1_over_x.executor": "Run",
+    "JUnit.DualNumberTest.testMultiply.executor": "Run",
+    "JUnit.DualNumberTest.testReciprocalZero.executor": "Run",
+    "JUnit.DualNumberTest.testSin.executor": "Run",
+    "JUnit.DualNumberTest.testexp_1_over_x.executor": "Run",
+    "Maven. [-Dimage,clean,install,site].executor": "Run",
+    "Maven. [clean].executor": "Run",
+    "Maven. [package].executor": "Run",
+    "Maven.FunkPlotter [clean].executor": "Run",
+    "Maven.FunkPlotter [compile].executor": "Run",
+    "Maven.FunkPlotter [validate].executor": "Run",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "git-widget-placeholder": "main",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "G:/Meinolf/Github/FunkPlotter",
+    "project.structure.last.edited": "Project",
+    "project.structure.proportion": "0.0",
+    "project.structure.side.proportion": "0.0",
+    "settings.editor.selected.configurable": "com.android.studio.ml.bot.mainConfigurable"
   }
-}</component>
+}]]></component>
   <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="de.mherbst.funkplotter.Main" />

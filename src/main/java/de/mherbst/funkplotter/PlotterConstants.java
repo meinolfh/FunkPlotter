@@ -8,6 +8,6 @@ public final class PlotterConstants {
     private PlotterConstants () {
     }
 
-    public static final int APPL_WIDTH = 1024;
-    public static final int APPL_HEIGHT = 768;
+    public static final int APPL_WIDTH = 1920;
+    public static final int APPL_HEIGHT = 1080;
 }

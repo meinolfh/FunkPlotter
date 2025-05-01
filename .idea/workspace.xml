@@ -5,10 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="cddd963a-9b22-48e4-add1-ac555a575919" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/de/mherbst/funkplotter/math/DualNumber.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/java/de/mherbst/funkplotter/math/DualNumberTest.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/de/mherbst/funkplotter/PlotterApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/mherbst/funkplotter/PlotterApplication.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/de/mherbst/funkplotter/PlotterConstants.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/mherbst/funkplotter/PlotterConstants.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/de/mherbst/funkplotter/PlotterController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/de/mherbst/funkplotter/PlotterController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/module-info.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/module-info.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/de/mherbst/funkplotter/PlotterView.fxml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/de/mherbst/funkplotter/PlotterView.fxml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -48,6 +51,17 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;Application.Main.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.DualNumberTest.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.DualNumberTest.testAdd.executor&quot;: &quot;Coverage&quot;,
+    &quot;JUnit.DualNumberTest.testConstructor.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.DualNumberTest.testExp_1_over_x.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.DualNumberTest.testMultiply.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.DualNumberTest.testReciprocalZero.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.DualNumberTest.testSin.executor&quot;: &quot;Run&quot;,
+    &quot;JUnit.DualNumberTest.testexp_1_over_x.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.FunkPlotter [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.FunkPlotter [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.FunkPlotter [validate].executor&quot;: &quot;Run&quot;,
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
     &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
     &quot;SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
@@ -60,7 +74,7 @@
     &quot;settings.editor.selected.configurable&quot;: &quot;com.android.studio.ml.bot.mainConfigurable&quot;
   }
 }</component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.Main">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="de.mherbst.funkplotter.Main" />
       <module name="FunkPlotter" />
@@ -74,9 +88,76 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="DualNumberTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="FunkPlotter" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="de.mherbst.funkplotter.math.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="de.mherbst.funkplotter.math" />
+      <option name="MAIN_CLASS_NAME" value="de.mherbst.funkplotter.math.DualNumberTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DualNumberTest.testAdd" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="FunkPlotter" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="de.mherbst.funkplotter.math.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="de.mherbst.funkplotter.math" />
+      <option name="MAIN_CLASS_NAME" value="de.mherbst.funkplotter.math.DualNumberTest" />
+      <option name="METHOD_NAME" value="testAdd" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DualNumberTest.testConstructor" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="FunkPlotter" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="de.mherbst.funkplotter.math.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="de.mherbst.funkplotter.math" />
+      <option name="MAIN_CLASS_NAME" value="de.mherbst.funkplotter.math.DualNumberTest" />
+      <option name="METHOD_NAME" value="testConstructor" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="DualNumberTest.testMultiply" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="FunkPlotter" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="de.mherbst.funkplotter.math.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="de.mherbst.funkplotter.math" />
+      <option name="MAIN_CLASS_NAME" value="de.mherbst.funkplotter.math.DualNumberTest" />
+      <option name="METHOD_NAME" value="testMultiply" />
+      <option name="TEST_OBJECT" value="method" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
         <item itemvalue="Application.Main" />
+        <item itemvalue="JUnit.DualNumberTest" />
+        <item itemvalue="JUnit.DualNumberTest.testAdd" />
+        <item itemvalue="JUnit.DualNumberTest.testConstructor" />
+        <item itemvalue="JUnit.DualNumberTest.testMultiply" />
       </list>
     </recent_temporary>
   </component>
@@ -90,5 +171,16 @@
       <updated>1743346279807</updated>
     </task>
     <servers />
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/FunkPlotter$DualNumberTest_testExp_1_over_x.ic" NAME="DualNumberTest.testExp_1_over_x Coverage Results" MODIFIED="1745014918895" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>de.mherbst.funkplotter.math.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/FunkPlotter$DualNumberTest_testAdd.ic" NAME="DualNumberTest.testAdd Coverage Results" MODIFIED="1745231211833" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>de.mherbst.funkplotter.math.*</FILTER>
+    </SUITE>
+    <SUITE FILE_PATH="coverage/FunkPlotter$DualNumberTest_testSin.ic" NAME="DualNumberTest.testSin Coverage Results" MODIFIED="1745179190288" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="true">
+      <FILTER>de.mherbst.funkplotter.math.*</FILTER>
+    </SUITE>
   </component>
 </project>

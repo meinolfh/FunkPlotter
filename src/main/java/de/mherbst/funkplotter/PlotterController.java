@@ -1,5 +1,6 @@
 package de.mherbst.funkplotter;
 
+import de.mherbst.funkplotter.math.DualNumber;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.geometry.Point2D;
@@ -19,7 +20,7 @@ public class PlotterController implements Initializable {
 
     @FXML
     public BorderPane rootPane;
-//    @FXML
+    //    @FXML
 //    public SplitPane splitPane;
     @FXML
     public AnchorPane anchorPaneLeft;
@@ -219,8 +220,8 @@ public class PlotterController implements Initializable {
         // Determine appropriate grid spacing based on scale
         // (This is a simple example, more sophisticated logic might be needed)
         double gridStep = 1.0;
-        if ( scale < 10 ) gridStep = 5;
         if ( scale < 5 ) gridStep = 10;
+        if ( scale < 10 ) gridStep = 5;
         if ( scale > 100 ) gridStep = 0.5;
         if ( scale > 200 ) gridStep = 0.25;
         // Add more steps as needed
@@ -278,7 +279,7 @@ public class PlotterController implements Initializable {
 
     public void drawFunction ( GraphicsContext gc, double canvasWidth, double canvasHeight ) {
         gc.save ( );
-        gc.setStroke ( Color.RED );
+        //gc.setStroke ( Color.RED );
         gc.setLineWidth ( 1.5 ); // Slightly thicker line
 
         // Calculate mathematical range to plot based on canvas width
@@ -289,7 +290,7 @@ public class PlotterController implements Initializable {
         double maxMathX = endMath.getX ( );
 
         boolean firstPoint = true;
-        double lastCanvasX = 0, lastCanvasY = 0;
+        double lastCanvasX = 0, lastCanvasY = 0, lastCanvasY2 = 0;
 
         // Iterate through canvas pixels horizontally for smoothness
         for (double canvasX = 0; canvasX <= canvasWidth; canvasX += 1) {
@@ -298,11 +299,15 @@ public class PlotterController implements Initializable {
             double mathX = currentMath.getX ( );
 
             // Calculate mathematical Y using the function
+            DualNumber dn = new DualNumber ( mathX, 1.0 );
             double mathY = Math.sin ( mathX ); // Your function here!
+            double mathY2 = dn.sin ( ).getDual ( );
 
             // Convert mathematical Y back to canvas pixel Y
             Point2D currentCanvas = mathToCanvas ( mathX, mathY );
+            Point2D currentCanvas2 = mathToCanvas ( mathX, mathY2 );
             double canvasY = currentCanvas.getY ( );
+            double canvasY2 = currentCanvas2.getY ( );
 
             // Draw line segment
             if ( firstPoint ) {
@@ -313,11 +318,15 @@ public class PlotterController implements Initializable {
                 if ( !Double.isNaN ( lastCanvasY ) && !Double.isNaN ( canvasY ) &&
                         lastCanvasY > -canvasHeight * 2 && lastCanvasY < canvasHeight * 2 && // Generous bounds
                         canvasY > -canvasHeight * 2 && canvasY < canvasHeight * 2 ) {
+                    gc.setStroke ( Color.RED );
                     gc.strokeLine ( lastCanvasX, lastCanvasY, canvasX, canvasY );
+                    gc.setStroke ( Color.BLUE );
+                    gc.strokeLine ( lastCanvasX, lastCanvasY2, canvasX, canvasY2 );
                 }
             }
             lastCanvasX = canvasX;
             lastCanvasY = canvasY;
+            lastCanvasY2 = canvasY2;
         }
         gc.restore ( );
     }
